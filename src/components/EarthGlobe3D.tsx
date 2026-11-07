@@ -242,6 +242,16 @@ export const EarthGlobe3D = forwardRef<EarthGlobe3DRef, EarthGlobe3DProps>(({ ob
 
           const isSelected = selectedObject?.id === sat.id;
           const isAboveHorizon = sat.altitude >= 0;
+          const isIsro =
+            sat.category === 'isro' ||
+            sat.name.toUpperCase().includes('NAVIC') ||
+            sat.name.toUpperCase().includes('IRNSS') ||
+            sat.name.toUpperCase().includes('ASTROSAT') ||
+            sat.name.toUpperCase().includes('XPOSAT') ||
+            sat.name.toUpperCase().includes('CARTOSAT') ||
+            sat.name.toUpperCase().includes('EOS-') ||
+            sat.name.toUpperCase().includes('GSAT') ||
+            sat.name.toUpperCase().includes('INSAT');
 
           return (
             <group key={sat.id}>
@@ -281,24 +291,28 @@ export const EarthGlobe3D = forwardRef<EarthGlobe3DRef, EarthGlobe3DProps>(({ ob
                 {isSelected && (
                   <mesh>
                     <ringGeometry args={[1.8, 2.3, 32]} />
-                    <meshBasicMaterial color="#38bdf8" side={THREE.DoubleSide} />
+                    <meshBasicMaterial color={isIsro ? '#f97316' : '#38bdf8'} side={THREE.DoubleSide} />
                   </mesh>
                 )}
 
                 {/* Satellite Name Tag */}
-                {(isSelected || sat.noradId === 25544 || isAboveHorizon) && (
+                {(isSelected || sat.noradId === 25544 || isAboveHorizon || isIsro) && (
                   <Billboard position={[0, 1.6, 0]}>
                     <Html center distanceFactor={70} zIndexRange={[10, 0]}>
                       <div
                         className={`px-1.5 py-0.5 rounded font-mono text-[9px] whitespace-nowrap cursor-pointer transition-all ${
                           isSelected
-                            ? 'bg-cyan-500 text-space-950 font-bold shadow-lg shadow-cyan-500/50'
+                            ? isIsro
+                              ? 'bg-amber-500 text-space-950 font-bold shadow-lg shadow-amber-500/50'
+                              : 'bg-cyan-500 text-space-950 font-bold shadow-lg shadow-cyan-500/50'
+                            : isIsro
+                            ? 'bg-amber-950/90 text-amber-300 border border-amber-600/70 shadow-sm shadow-amber-500/20'
                             : isAboveHorizon
                             ? 'bg-space-900/90 text-cyan-200 border border-cyan-800'
                             : 'bg-space-950/80 text-slate-400 border border-slate-800'
                         }`}
                       >
-                        {sat.name} ({altKm}km)
+                        {isIsro ? '🇮🇳 ' : ''}{sat.name} ({altKm}km)
                       </div>
                     </Html>
                   </Billboard>

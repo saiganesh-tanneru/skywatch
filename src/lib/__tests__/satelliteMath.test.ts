@@ -102,6 +102,7 @@ GHOST SAT
       visual: true,
       active: false,
       starlink: false,
+      isro: true,
     };
 
     expect(isSatelliteVisibleByFilter(starlinkSat, groupsNoStarlink)).toBe(false);
@@ -114,9 +115,64 @@ GHOST SAT
       visual: true,
       active: false,
       starlink: true,
+      isro: true,
     };
 
     expect(isSatelliteVisibleByFilter(starlinkSat, groupsWithStarlink)).toBe(true);
     expect(isSatelliteVisibleByFilter(starlinkInVisual, groupsWithStarlink)).toBe(true);
+  });
+
+  it('correctly filters ISRO satellites on and off via isSatelliteVisibleByFilter', () => {
+    const astrosat = {
+      name: 'ASTROSAT',
+      category: 'isro',
+      noradId: 40930,
+    };
+
+    const navic = {
+      name: 'IRNSS-1I (NAVIC)',
+      category: 'active',
+      noradId: 43286,
+    };
+
+    const cartosat = {
+      name: 'CARTOSAT-3',
+      category: 'visual',
+      noradId: 44804,
+    };
+
+    const iss = {
+      name: 'ISS (ZARYA)',
+      category: 'stations',
+      noradId: 25544,
+    };
+
+    // When ISRO group is enabled
+    const groupsWithIsro = {
+      stations: true,
+      visual: true,
+      active: false,
+      starlink: false,
+      isro: true,
+    };
+
+    expect(isSatelliteVisibleByFilter(astrosat, groupsWithIsro)).toBe(true);
+    expect(isSatelliteVisibleByFilter(navic, groupsWithIsro)).toBe(true);
+    expect(isSatelliteVisibleByFilter(cartosat, groupsWithIsro)).toBe(true);
+    expect(isSatelliteVisibleByFilter(iss, groupsWithIsro)).toBe(true);
+
+    // When ISRO group is disabled
+    const groupsNoIsro = {
+      stations: true,
+      visual: true,
+      active: false,
+      starlink: false,
+      isro: false,
+    };
+
+    expect(isSatelliteVisibleByFilter(astrosat, groupsNoIsro)).toBe(false);
+    expect(isSatelliteVisibleByFilter(navic, groupsNoIsro)).toBe(false);
+    expect(isSatelliteVisibleByFilter(cartosat, groupsNoIsro)).toBe(false);
+    expect(isSatelliteVisibleByFilter(iss, groupsNoIsro)).toBe(true);
   });
 });

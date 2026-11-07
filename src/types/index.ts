@@ -64,7 +64,7 @@ export interface SkyObject extends CelestialCoordinates {
   imageUrl?: string;
 }
 
-export type SatelliteGroup = 'stations' | 'visual' | 'active' | 'starlink';
+export type SatelliteGroup = 'stations' | 'visual' | 'active' | 'starlink' | 'isro';
 
 export interface SatellitePass {
   satelliteId: string;

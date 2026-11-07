@@ -276,11 +276,39 @@ export function isSatelliteVisibleByFilter(
 ): boolean {
   if (!satelliteGroups) return true;
 
+  const nameUpper = sat.name.toUpperCase();
+  const descUpper = sat.description ? sat.description.toUpperCase() : '';
+
+  const isIsro =
+    sat.category === 'isro' ||
+    sat.group === 'isro' ||
+    nameUpper.includes('ISRO') ||
+    nameUpper.includes('ASTROSAT') ||
+    nameUpper.includes('XPOSAT') ||
+    nameUpper.includes('CARTOSAT') ||
+    nameUpper.includes('RISAT') ||
+    nameUpper.includes('EOS-') ||
+    nameUpper.includes('OCEANSAT') ||
+    nameUpper.includes('IRNSS') ||
+    nameUpper.includes('NAVIC') ||
+    nameUpper.includes('NVS-') ||
+    nameUpper.includes('GSAT') ||
+    nameUpper.includes('INSAT') ||
+    nameUpper.includes('CHANDRAYAAN') ||
+    nameUpper.includes('ADITYA') ||
+    nameUpper.includes('MANGALYAAN') ||
+    descUpper.includes('ISRO') ||
+    descUpper.includes('INDIAN SPACE RESEARCH');
+
+  if (isIsro) {
+    return Boolean(satelliteGroups.isro);
+  }
+
   const isStarlink =
     sat.category === 'starlink' ||
     sat.group === 'starlink' ||
-    sat.name.toUpperCase().includes('STARLINK') ||
-    (Boolean(sat.description) && sat.description!.toUpperCase().includes('STARLINK'));
+    nameUpper.includes('STARLINK') ||
+    descUpper.includes('STARLINK');
 
   if (isStarlink) {
     return Boolean(satelliteGroups.starlink);

@@ -177,6 +177,26 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({ onZoomToObject }) =>
                   NORAD #{selectedObject.noradId}
                 </span>
               )}
+              {(selectedObject.category === 'isro' ||
+                selectedObject.name.toUpperCase().includes('ISRO') ||
+                selectedObject.name.toUpperCase().includes('ASTROSAT') ||
+                selectedObject.name.toUpperCase().includes('XPOSAT') ||
+                selectedObject.name.toUpperCase().includes('CARTOSAT') ||
+                selectedObject.name.toUpperCase().includes('RISAT') ||
+                selectedObject.name.toUpperCase().includes('EOS-') ||
+                selectedObject.name.toUpperCase().includes('IRNSS') ||
+                selectedObject.name.toUpperCase().includes('NAVIC') ||
+                selectedObject.name.toUpperCase().includes('NVS-') ||
+                selectedObject.name.toUpperCase().includes('GSAT') ||
+                selectedObject.name.toUpperCase().includes('INSAT') ||
+                selectedObject.name.toUpperCase().includes('CHANDRAYAAN') ||
+                selectedObject.name.toUpperCase().includes('ADITYA') ||
+                selectedObject.name.toUpperCase().includes('MANGALYAAN') ||
+                (Boolean(selectedObject.description) && selectedObject.description!.includes('ISRO'))) && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold">
+                  🇮🇳 ISRO
+                </span>
+              )}
             </div>
           </div>
         </div>

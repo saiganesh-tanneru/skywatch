@@ -302,6 +302,14 @@ export const GoogleEarthLayers: React.FC<GoogleEarthLayersProps> = ({
       icon: Orbit,
       color: '#f59e0b',
     },
+    {
+      key: 'isro',
+      isGroup: true,
+      label: 'ISRO Satellites & Fleet',
+      desc: 'AstroSat, XPoSat, NavIC constellation, EOS-04/06 radar & Cartosat',
+      icon: Compass,
+      color: '#f97316',
+    },
   ];
 
   const getCategoriesForTab = (tab: ViewMode): FilterCategoryOption[] => {

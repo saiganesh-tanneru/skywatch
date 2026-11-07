@@ -215,6 +215,7 @@ export const useSkyStore = create<SkyState>((set) => ({
       stations: true,
       active: false,
       starlink: false,
+      isro: true,
     },
     searchQuery: '',
     minAltitude: 0,
@@ -306,6 +307,7 @@ export const useSkyStore = create<SkyState>((set) => ({
           visual: category === ('visual' as any),
           active: category === ('active' as any),
           starlink: category === ('starlink' as any),
+          isro: category === ('isro' as any),
         };
         f.satellites = true;
       } else {
@@ -363,6 +365,7 @@ export const useSkyStore = create<SkyState>((set) => ({
           visual: true,
           active: true,
           starlink: true,
+          isro: true,
         };
       } else {
         f.satellites = true;
@@ -414,6 +417,7 @@ export const useSkyStore = create<SkyState>((set) => ({
           visual: false,
           active: false,
           starlink: false,
+          isro: false,
         };
       } else {
         f.satellites = false;
