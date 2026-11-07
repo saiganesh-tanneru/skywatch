@@ -45,4 +45,13 @@ describe('StorageCache', () => {
     const result = cache.get('corrupt');
     expect(result).toBeNull();
   });
+
+  it('uses 12 hours default TTL and supports has / getRemainingTtl', () => {
+    cache.set('defaultTtlItem', { val: 42 });
+    expect(cache.has('defaultTtlItem')).toBe(true);
+
+    const remaining = cache.getRemainingTtl('defaultTtlItem');
+    expect(remaining).toBeGreaterThan(0);
+    expect(remaining).toBeLessThanOrEqual(12 * 60 * 60 * 1000);
+  });
 });

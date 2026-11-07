@@ -4,6 +4,8 @@ export interface CacheEnvelope<T> {
   ttlMs: number;
 }
 
+export const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000; // 12 hours TTL
+
 export class StorageCache {
   private prefix: string;
 
@@ -15,7 +17,7 @@ export class StorageCache {
     return `${this.prefix}${key}`;
   }
 
-  set<T>(key: string, data: T, ttlMs: number): boolean {
+  set<T>(key: string, data: T, ttlMs: number = TWELVE_HOURS_MS): boolean {
     try {
       const envelope: CacheEnvelope<T> = {
         data,
@@ -54,6 +56,24 @@ export class StorageCache {
       };
     } catch (err) {
       console.warn(`[StorageCache] Failed to read cache for key "${key}":`, err);
+      return null;
+    }
+  }
+
+  has(key: string): boolean {
+    const item = this.get(key);
+    return item !== null && !item.isExpired;
+  }
+
+  getRemainingTtl(key: string): number | null {
+    try {
+      const raw = localStorage.getItem(this.getKey(key));
+      if (!raw) return null;
+      const envelope: CacheEnvelope<any> = JSON.parse(raw);
+      if (!envelope || typeof envelope.timestamp !== 'number') return null;
+      const remaining = envelope.ttlMs - (Date.now() - envelope.timestamp);
+      return remaining > 0 ? remaining : 0;
+    } catch {
       return null;
     }
   }

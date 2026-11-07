@@ -1,7 +1,7 @@
-import { storageCache } from './storageCache';
+import { storageCache, TWELVE_HOURS_MS } from './storageCache';
 import { NearEarthAsteroid } from '../types';
 
-const NEOWS_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+const NEOWS_TTL_MS = TWELVE_HOURS_MS; // 12 hours TTL for NASA NeoWs close-approach asteroids
 
 // Realistic fallback close-approach asteroids if offline or rate-limited
 const FALLBACK_ASTEROIDS: NearEarthAsteroid[] = [

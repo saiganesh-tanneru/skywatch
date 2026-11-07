@@ -1,8 +1,8 @@
-import { storageCache } from './storageCache';
+import { storageCache, TWELVE_HOURS_MS } from './storageCache';
 import { SatelliteGroup } from '../types';
 import { parseTleText, parseOmmJson, RawSatelliteItem } from '../lib/satelliteMath';
 
-const CELESTRAK_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
+const CELESTRAK_TTL_MS = TWELVE_HOURS_MS; // 12 hours TTL for NORAD/CelesTrak ephemeris
 
 // High-fidelity fallback TLEs for core space stations & visible satellites
 const FALLBACK_TLES = `

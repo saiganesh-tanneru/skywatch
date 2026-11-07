@@ -1,8 +1,15 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useSkyStore, loadSavedLocation } from '../store/useSkyStore';
+import { storageCache, TWELVE_HOURS_MS } from '../services/storageCache';
 import { ObserverLocation } from '../types';
 
 async function fetchCityName(lat: number, lon: number): Promise<string | null> {
+  const cacheKey = `geo_city_${lat.toFixed(2)}_${lon.toFixed(2)}`;
+  const cached = storageCache.get<string>(cacheKey);
+  if (cached && !cached.isExpired) {
+    return cached.data;
+  }
+
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
@@ -20,7 +27,9 @@ async function fetchCityName(lat: number, lon: number): Promise<string | null> {
         data.address?.state;
       const country = data.address?.country_code?.toUpperCase() || '';
       if (city) {
-        return country ? `${city}, ${country}` : city;
+        const fullCity = country ? `${city}, ${country}` : city;
+        storageCache.set(cacheKey, fullCity, TWELVE_HOURS_MS);
+        return fullCity;
       }
     }
   } catch {
@@ -30,6 +39,12 @@ async function fetchCityName(lat: number, lon: number): Promise<string | null> {
 }
 
 async function fetchIpLocation(): Promise<ObserverLocation | null> {
+  const cacheKey = 'geo_ip_location';
+  const cached = storageCache.get<ObserverLocation>(cacheKey);
+  if (cached && !cached.isExpired) {
+    return cached.data;
+  }
+
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 4000);
@@ -39,7 +54,7 @@ async function fetchIpLocation(): Promise<ObserverLocation | null> {
     if (res.ok) {
       const data = await res.json();
       if (data.success && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
-        return {
+        const loc: ObserverLocation = {
           name: `${data.city || 'Local Area'}, ${data.country_code || ''}`,
           latitude: Number(data.latitude.toFixed(4)),
           longitude: Number(data.longitude.toFixed(4)),
@@ -47,6 +62,8 @@ async function fetchIpLocation(): Promise<ObserverLocation | null> {
           source: 'ip',
           updatedAt: Date.now(),
         };
+        storageCache.set(cacheKey, loc, TWELVE_HOURS_MS);
+        return loc;
       }
     }
   } catch (err) {

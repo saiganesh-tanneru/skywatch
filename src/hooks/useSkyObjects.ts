@@ -5,17 +5,25 @@ import { computeSolarSystem, computeStars, YaleStar } from '../lib/astronomy';
 import { isSatelliteVisibleByFilter } from '../lib/satelliteMath';
 import { SkyObject } from '../types';
 
+let memoryCachedStars: YaleStar[] | null = null;
+
 export function useSkyObjects() {
   const { location, timeOffsetSeconds, filters, viewMode } = useSkyStore();
   const { visibleSatellites, catalogCount, isLoading: isSatellitesLoading, lastUpdated } = useSatelliteTracker();
 
-  const [starCatalog, setStarCatalog] = useState<YaleStar[]>([]);
-  const [isStarsLoading, setIsStarsLoading] = useState<boolean>(true);
+  const [starCatalog, setStarCatalog] = useState<YaleStar[]>(() => memoryCachedStars || []);
+  const [isStarsLoading, setIsStarsLoading] = useState<boolean>(!memoryCachedStars);
   const [solarBodies, setSolarBodies] = useState<SkyObject[]>([]);
   const [visibleStars, setVisibleStars] = useState<SkyObject[]>([]);
 
-  // 1. Fetch Yale Bright Star Catalog once on mount
+  // 1. Fetch Yale Bright Star Catalog once on mount (cached in memory)
   useEffect(() => {
+    if (memoryCachedStars && memoryCachedStars.length > 0) {
+      setStarCatalog(memoryCachedStars);
+      setIsStarsLoading(false);
+      return;
+    }
+
     let isMounted = true;
     async function loadStars() {
       try {
@@ -23,6 +31,7 @@ export function useSkyObjects() {
         const res = await fetch('/data/yale_bright_stars.json');
         if (res.ok) {
           const data: YaleStar[] = await res.json();
+          memoryCachedStars = data;
           if (isMounted) {
             setStarCatalog(data);
           }
