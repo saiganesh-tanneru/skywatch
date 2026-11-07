@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSkyStore } from '../store/useSkyStore';
+import { BodySatelliteMiniViewer, resolveParentBody, getSatellitesForBody } from './BodySatelliteMiniViewer';
 import {
   X,
   Compass,
@@ -29,6 +30,9 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({ onZoomToObject }) =>
   if (!isDetailDrawerOpen || !selectedObject) {
     return null;
   }
+
+  const { bodyName, isSatellite } = resolveParentBody(selectedObject);
+  const bodySatellites = getSatellitesForBody(bodyName);
 
   const handleClose = () => {
     setDetailDrawerOpen(false);
@@ -216,8 +220,17 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({ onZoomToObject }) =>
         </button>
       </div>
 
-      {/* Visual Image Preview (when available) */}
-      {previewImg && (
+      {/* Interactive 3D Mini-Globe with Orbiting Satellites (like the Earth tab) */}
+      {(selectedObject.type === 'planet' ||
+        selectedObject.type === 'moon' ||
+        selectedObject.type === 'sun' ||
+        selectedObject.type === 'satellite' ||
+        selectedObject.name.toLowerCase().includes('earth')) ? (
+        <BodySatelliteMiniViewer
+          selectedObject={selectedObject}
+          onSelectSatellite={setSelectedObject}
+        />
+      ) : previewImg ? (
         <div className="relative w-full h-28 bg-radial from-cyan-950/40 to-space-950 border-b border-slate-800 flex items-center justify-center p-3 overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/[0.02]" />
           <img
@@ -229,7 +242,7 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({ onZoomToObject }) =>
             {selectedObject.type === 'asteroid' ? 'Asteroid Imagery' : 'Telemetry Model'}
           </span>
         </div>
-      )}
+      ) : null}
 
       {/* Main Details Body */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs">
@@ -372,6 +385,92 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({ onZoomToObject }) =>
             <span className="text-[10px] text-slate-500 uppercase">Ground Footprint (Sub-Point)</span>
             <div className="text-xs font-semibold text-slate-300 mt-0.5">
               Lat: {selectedObject.subLat}° | Lon: {selectedObject.subLon}°
+            </div>
+          </div>
+        )}
+
+        {/* Primary Gravitational Body for Satellites */}
+        {isSatellite && (
+          <div className="p-2.5 rounded-xl bg-space-950/60 border border-slate-800 flex items-center justify-between">
+            <div>
+              <span className="text-[10px] text-slate-500 uppercase">Primary Orbiting Body</span>
+              <div className="text-xs font-semibold text-cyan-300 mt-0.5">
+                {bodyName === 'Moon' ? '🌕 The Moon' : bodyName === 'Mars' ? '🔴 Mars' : bodyName === 'Earth' ? '🌍 Earth' : bodyName}
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setSelectedObject({
+                  id: `body-${bodyName.toLowerCase()}`,
+                  name: bodyName,
+                  type: bodyName.toLowerCase() === 'moon' ? 'moon' : bodyName.toLowerCase() === 'sun' ? 'sun' : 'planet',
+                  azimuth: selectedObject.azimuth,
+                  altitude: selectedObject.altitude,
+                  distanceKm: selectedObject.distanceKm,
+                  description: `Central gravitational primary for orbiting spacecraft.`,
+                });
+              }}
+              className="px-2 py-1 rounded-lg bg-slate-800 hover:bg-cyan-600 text-slate-200 text-[10px] font-semibold transition-colors"
+            >
+              View Body & Fleet
+            </button>
+          </div>
+        )}
+
+        {/* Orbiting Satellites Fleet (like the Earth tab) */}
+        {bodySatellites.length > 0 && (
+          <div>
+            <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <Radio className="w-3.5 h-3.5 text-cyan-400" />
+                <span>
+                  {bodyName} Orbiting Fleet ({bodySatellites.length})
+                </span>
+              </span>
+              <span className="text-[9px] text-slate-500 font-normal">Click to target</span>
+            </h3>
+            <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+              {bodySatellites.map((sat) => {
+                const isSelectedSat =
+                  selectedObject.id === sat.id ||
+                  selectedObject.name.includes(sat.name.split(' (')[0]);
+                const isIsro = sat.agency.includes('ISRO');
+
+                return (
+                  <div
+                    key={sat.id}
+                    onClick={() => setSelectedObject(sat.skyObject)}
+                    className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                      isSelectedSat
+                        ? 'bg-cyan-950/60 border-cyan-500/80 shadow-md shadow-cyan-500/20'
+                        : 'bg-space-950/60 border-slate-800/80 hover:border-slate-700 hover:bg-space-900/60'
+                    }`}
+                  >
+                    <div className="min-w-0 flex-1">
+                      <div className="text-xs font-semibold text-slate-200 flex items-center gap-1.5 truncate">
+                        {isIsro && <span className="text-[10px]">🇮🇳</span>}
+                        <span className="truncate">{sat.name}</span>
+                      </div>
+                      <div className="text-[10px] text-slate-400 flex items-center gap-2 mt-0.5">
+                        <span className={isIsro ? 'text-amber-400 font-medium' : 'text-cyan-400 font-medium'}>
+                          {sat.agency}
+                        </span>
+                        <span>•</span>
+                        <span>Launched {sat.launchYear}</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedObject(sat.skyObject);
+                      }}
+                      className="px-2 py-1 rounded-lg bg-slate-800 hover:bg-cyan-600 hover:text-white text-slate-300 text-[10px] font-semibold transition-colors shrink-0"
+                    >
+                      Target
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
