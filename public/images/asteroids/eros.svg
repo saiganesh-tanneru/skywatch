@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Eros S-type Stony-Silicate Ochre Gradient -->
+    <radialGradient id="erosRock" cx="35%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#d6d3d1" />
+      <stop offset="30%" stop-color="#a8a29e" />
+      <stop offset="65%" stop-color="#78716c" />
+      <stop offset="100%" stop-color="#292524" />
+    </radialGradient>
+  </defs>
+
+  <!-- Elongated Peanut / Kidney-Bean Shaped Body -->
+  <path d="M 120,180 
+           C 150,110 240,110 300,140 
+           C 360,170 420,190 440,260 
+           C 460,330 400,410 330,410 
+           C 270,410 240,360 210,330 
+           C 170,290 120,320 80,280 
+           C 50,250 80,220 120,180 Z" 
+        fill="url(#erosRock)" />
+
+  <!-- Psyche Crater (Major impact depression on Eros) -->
+  <ellipse cx="170" cy="220" rx="42" ry="32" fill="#292524" stroke="#78716c" stroke-width="2.5" />
+  <!-- Smooth dust ponds inside crater -->
+  <ellipse cx="170" cy="220" rx="16" ry="10" fill="#57534e" opacity="0.8" />
+
+  <!-- Shoemaker Crater -->
+  <ellipse cx="340" cy="280" rx="55" ry="40" fill="#1c1917" stroke="#57534e" stroke-width="3" />
+  <!-- NEAR Shoemaker Landing Site Marker (February 12, 2001) -->
+  <circle cx="340" cy="280" r="4" fill="#38bdf8" />
+  
+  <!-- Surface Grooves & Facets -->
+  <path d="M 210,135 Q 260,200 240,320" fill="none" stroke="#44403c" stroke-width="3" opacity="0.7" />
+  <path d="M 290,145 Q 340,210 330,350" fill="none" stroke="#292524" stroke-width="3" opacity="0.6" />
+
+  <circle cx="260" cy="190" r="18" fill="#292524" stroke="#57534e" stroke-width="1.5" />
+  <circle cx="390" cy="230" r="22" fill="#1c1917" stroke="#44403c" stroke-width="1.5" />
+
+  <!-- Shadow Terminator (Right and bottom) -->
+  <path d="M 120,180 
+           C 240,110 300,140 440,260 
+           C 460,330 400,410 330,410 
+           C 340,350 310,270 240,220 
+           C 180,180 130,220 120,180 Z" 
+        fill="#000000" opacity="0.6" />
+</svg>

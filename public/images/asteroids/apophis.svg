@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Apophis Sq-type Stony Rubble Gradient -->
+    <radialGradient id="apophisSurface" cx="38%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#cbd5e1" />
+      <stop offset="30%" stop-color="#94a3b8" />
+      <stop offset="65%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+  </defs>
+
+  <!-- Apophis Irregular Elongated Stony Silhouette -->
+  <polygon points="170,110 270,95 380,140 430,230 420,330 350,410 230,425 130,370 85,270 105,180" fill="url(#apophisSurface)" />
+
+  <!-- Ridges, Boulders & Facets -->
+  <line x1="170" y1="110" x2="250" y2="240" stroke="#64748b" stroke-width="2.5" />
+  <line x1="270" y1="95" x2="330" y2="220" stroke="#94a3b8" stroke-width="2" />
+  <line x1="250" y1="240" x2="350" y2="410" stroke="#334155" stroke-width="3" />
+  <line x1="250" y1="240" x2="130" y2="370" stroke="#475569" stroke-width="2.5" />
+  <line x1="430" y1="230" x2="330" y2="220" stroke="#334155" stroke-width="2" />
+
+  <!-- Impact Pits & Boulders -->
+  <ellipse cx="210" cy="190" rx="32" ry="24" fill="#334155" stroke="#64748b" stroke-width="2" />
+  <ellipse cx="320" cy="270" rx="38" ry="28" fill="#1e293b" stroke="#475569" stroke-width="2" />
+  <polygon points="150,290 175,275 185,300 160,310" fill="#475569" stroke="#64748b" stroke-width="1.5" />
+  <polygon points="260,340 285,325 295,350 270,360" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+
+  <!-- Shadow Terminator (Right side in deep space shadow) -->
+  <polygon points="270,95 380,140 430,230 420,330 350,410 280,310 290,200" fill="#000000" opacity="0.68" />
+</svg>

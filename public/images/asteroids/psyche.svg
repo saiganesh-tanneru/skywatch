@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Metallic Nickel-Iron Lustre Gradient -->
+    <radialGradient id="psycheMetal" cx="38%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#e2e8f0" />
+      <stop offset="25%" stop-color="#94a3b8" />
+      <stop offset="55%" stop-color="#64748b" />
+      <stop offset="80%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+
+    <!-- Metallic Specular Highlight -->
+    <linearGradient id="metalSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.8" />
+      <stop offset="30%" stop-color="#cbd5e1" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Irregular Metallic Protoplanetary Core Silhouette -->
+  <path d="M 230,55 
+           C 320,50 410,80 445,150 
+           C 475,210 460,280 440,340 
+           C 415,410 350,455 270,465 
+           C 190,475 120,440 80,380 
+           C 45,310 50,220 85,150 
+           C 120,85 170,60 230,55 Z" 
+        fill="url(#psycheMetal)" />
+
+  <!-- Metallic Specular Luster Band -->
+  <path d="M 230,55 
+           C 320,50 410,80 445,150 
+           C 475,210 460,280 440,340 
+           C 360,280 300,180 230,55 Z" 
+        fill="url(#metalSheen)" />
+
+  <!-- Crystalline Metallic Impact Excavations -->
+  <ellipse cx="210" cy="190" rx="48" ry="38" fill="#1e293b" stroke="#94a3b8" stroke-width="2.5" />
+  <circle cx="330" cy="220" r="42" fill="#1e293b" stroke="#64748b" stroke-width="2" />
+  <ellipse cx="280" cy="330" rx="55" ry="35" fill="#0f172a" stroke="#64748b" stroke-width="2.5" />
+
+  <!-- Surface Metal Ridges & Scarps -->
+  <path d="M 140,150 L 190,260 L 160,330" fill="none" stroke="#475569" stroke-width="3" />
+  <path d="M 270,120 L 320,180" fill="none" stroke="#cbd5e1" stroke-width="2" />
+  <path d="M 370,140 L 410,210 L 380,300" fill="none" stroke="#334155" stroke-width="3" />
+
+  <!-- Scattered High-Reflectance Metal Regolith Glints -->
+  <circle cx="160" cy="180" r="3" fill="#ffffff" />
+  <circle cx="280" cy="150" r="4" fill="#ffffff" />
+  <circle cx="230" cy="270" r="3" fill="#ffffff" />
+  <circle cx="360" cy="280" r="3" fill="#ffffff" />
+
+  <!-- Shadow Terminator -->
+  <path d="M 230,55 
+           C 320,50 410,80 445,150 
+           C 475,210 460,280 440,340 
+           C 415,410 350,455 270,465 
+           C 340,410 370,310 365,220 
+           C 360,130 310,80 230,55 Z" 
+        fill="#000000" opacity="0.65" />
+</svg>

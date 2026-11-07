@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Vesta Basaltic Surface Gradient -->
+    <radialGradient id="vestaSurface" cx="40%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#a8a29e" />
+      <stop offset="35%" stop-color="#78716c" />
+      <stop offset="70%" stop-color="#44403c" />
+      <stop offset="100%" stop-color="#1c1917" />
+    </radialGradient>
+
+    <!-- Rheasilvia Basin Central Peak -->
+    <radialGradient id="centralPeak" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d6d3d1" />
+      <stop offset="60%" stop-color="#78716c" />
+      <stop offset="100%" stop-color="#292524" />
+    </radialGradient>
+  </defs>
+
+  <!-- Vesta Oblate / Irregular Silhouette -->
+  <path d="M 256,48 
+           C 340,50 430,90 460,180 
+           C 485,250 470,330 430,400 
+           C 380,470 300,480 230,475 
+           C 160,470 90,430 60,350 
+           C 30,270 50,170 100,105 
+           C 145,55 200,46 256,48 Z" 
+        fill="url(#vestaSurface)" />
+
+  <!-- Divalia & Saturnalia Fossae (Equatorial Trough Grooves) -->
+  <path d="M 90,260 Q 250,290 440,250" fill="none" stroke="#292524" stroke-width="6" opacity="0.75" />
+  <path d="M 85,264 Q 250,294 440,254" fill="none" stroke="#a8a29e" stroke-width="2" opacity="0.6" />
+  <path d="M 110,295 Q 260,325 420,290" fill="none" stroke="#1c1917" stroke-width="5" opacity="0.7" />
+  <path d="M 130,230 Q 260,250 410,220" fill="none" stroke="#292524" stroke-width="4" opacity="0.65" />
+
+  <!-- Rheasilvia Giant South Polar Impact Basin -->
+  <ellipse cx="280" cy="410" rx="95" ry="50" fill="#1c1917" opacity="0.75" stroke="#57534e" stroke-width="3" />
+  <!-- Massive Central Peak of Rheasilvia (22 km high!) -->
+  <ellipse cx="280" cy="405" rx="32" ry="20" fill="url(#centralPeak)" stroke="#a8a29e" stroke-width="1.5" />
+
+  <!-- Snowman Craters (Marcia, Calpurnia, Minucia) -->
+  <circle cx="180" cy="170" r="32" fill="#292524" stroke="#78716c" stroke-width="2" />
+  <circle cx="210" cy="130" r="24" fill="#292524" stroke="#78716c" stroke-width="2" />
+  <circle cx="230" cy="100" r="16" fill="#1c1917" stroke="#57534e" stroke-width="1.5" />
+
+  <!-- Additional Major Craters -->
+  <circle cx="340" cy="170" r="38" fill="#292524" opacity="0.8" stroke="#57534e" stroke-width="2" />
+  <circle cx="130" cy="340" r="28" fill="#1c1917" opacity="0.8" stroke="#44403c" stroke-width="2" />
+  <circle cx="370" cy="310" r="25" fill="#1c1917" opacity="0.8" stroke="#44403c" stroke-width="2" />
+
+  <!-- Terminator / Dark Limb Shadow -->
+  <path d="M 256,48 
+           C 340,50 430,90 460,180 
+           C 485,250 470,330 430,400 
+           C 380,470 300,480 230,475 
+           C 330,420 380,330 380,240 
+           C 380,150 330,80 256,48 Z" 
+        fill="#000000" opacity="0.7" />
+</svg>

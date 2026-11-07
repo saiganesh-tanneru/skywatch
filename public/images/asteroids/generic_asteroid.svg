@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Generic Rocky Asteroid Gradient -->
+    <radialGradient id="asteroidBody" cx="38%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#a8a29e" />
+      <stop offset="35%" stop-color="#78716c" />
+      <stop offset="70%" stop-color="#44403c" />
+      <stop offset="100%" stop-color="#1c1917" />
+    </radialGradient>
+  </defs>
+
+  <!-- Irregular Lumpy Potato Asteroid Silhouette -->
+  <path d="M 230,60 
+           C 310,50 390,85 435,145 
+           C 475,210 465,290 440,360 
+           C 410,430 330,465 250,460 
+           C 170,455 110,420 70,350 
+           C 35,280 45,185 95,120 
+           C 140,65 180,65 230,60 Z" 
+        fill="url(#asteroidBody)" />
+
+  <!-- Major Impact Craters -->
+  <circle cx="190" cy="190" r="45" fill="#292524" stroke="#78716c" stroke-width="2.5" />
+  <circle cx="320" cy="220" r="38" fill="#1c1917" stroke="#57534e" stroke-width="2" />
+  <circle cx="260" cy="330" r="50" fill="#1c1917" stroke="#44403c" stroke-width="2.5" />
+  <circle cx="140" cy="310" r="28" fill="#292524" stroke="#57534e" stroke-width="1.5" />
+  <circle cx="360" cy="310" r="26" fill="#0c0a09" stroke="#44403c" stroke-width="1.5" />
+
+  <!-- Shadow Terminator (Limb darkening) -->
+  <path d="M 230,60 
+           C 310,50 390,85 435,145 
+           C 475,210 465,290 440,360 
+           C 410,430 330,465 250,460 
+           C 330,410 360,320 350,210 
+           C 340,120 290,75 230,60 Z" 
+        fill="#000000" opacity="0.65" />
+</svg>

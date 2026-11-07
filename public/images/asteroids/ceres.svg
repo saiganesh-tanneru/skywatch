@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Ceres Base Rock Texture Gradient -->
+    <radialGradient id="ceresSurface" cx="42%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#78716c" />
+      <stop offset="35%" stop-color="#57534e" />
+      <stop offset="70%" stop-color="#292524" />
+      <stop offset="100%" stop-color="#0c0a09" />
+    </radialGradient>
+
+    <!-- Occator Crater Faculae (Sodium Carbonate Bright Spot) -->
+    <radialGradient id="occatorGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="25%" stop-color="#e0f2fe" />
+      <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Crater Shadow Gradients -->
+    <radialGradient id="craterDark" cx="65%" cy="65%" r="60%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="70%" stop-color="#292524" />
+      <stop offset="100%" stop-color="#78716c" />
+    </radialGradient>
+  </defs>
+
+  <!-- Ceres Spherical Body -->
+  <circle cx="256" cy="256" r="220" fill="url(#ceresSurface)" />
+
+  <!-- Surface Crater Relief -->
+  <!-- Kerwan Basin -->
+  <ellipse cx="200" cy="180" rx="55" ry="48" fill="#1c1917" opacity="0.6" stroke="#44403c" stroke-width="3" />
+  
+  <!-- Urvara & Yalode Craters -->
+  <circle cx="170" cy="330" r="42" fill="#1c1917" opacity="0.7" stroke="#57534e" stroke-width="2.5" />
+  <circle cx="310" cy="340" r="38" fill="#1c1917" opacity="0.6" stroke="#57534e" stroke-width="2" />
+  <circle cx="340" cy="200" r="32" fill="#1c1917" opacity="0.5" stroke="#44403c" stroke-width="2" />
+  
+  <!-- Scattered Small Impact Pits -->
+  <circle cx="140" cy="240" r="16" fill="#1c1917" opacity="0.6" stroke="#57534e" stroke-width="1.5" />
+  <circle cx="260" cy="130" r="22" fill="#1c1917" opacity="0.7" stroke="#57534e" stroke-width="1.5" />
+  <circle cx="370" cy="270" r="18" fill="#1c1917" opacity="0.7" stroke="#44403c" stroke-width="1.5" />
+  <circle cx="230" cy="390" r="24" fill="#0c0a09" opacity="0.8" stroke="#44403c" stroke-width="1.5" />
+
+  <!-- Famous Occator Crater with Cerealia Facula (Bright Salts) -->
+  <circle cx="270" cy="240" r="36" fill="#292524" stroke="#78716c" stroke-width="2" />
+  <circle cx="270" cy="240" r="28" fill="url(#occatorGlow)" />
+  <circle cx="270" cy="240" r="10" fill="#ffffff" filter="drop-shadow(0 0 6px #ffffff)" />
+  <!-- Vinalia Faculae (Secondary bright spots) -->
+  <circle cx="282" cy="246" r="4" fill="#ffffff" opacity="0.9" />
+  <circle cx="262" cy="235" r="3" fill="#ffffff" opacity="0.8" />
+
+  <!-- Limb Shadow Atmosphere/Space Edge -->
+  <path d="M 256,36 A 220 220 0 0 1 476,256 A 220 220 0 0 1 256,476 C 360,430 430,350 430,256 C 430,162 360,82 256,36 Z" fill="#000000" opacity="0.75" />
+</svg>
