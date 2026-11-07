@@ -406,13 +406,27 @@ export const SolarSystem3D = forwardRef<SolarSystem3DRef, SolarSystem3DProps>(({
     return scaleHelioAU(1, 0, 0); // 1 AU default
   }, [earthObj]);
 
-  // Planet positions map for placing orbiting satellites
+  // Planet & Moon positions map for placing orbiting satellites
   const planetPositions = useMemo(() => {
     const map = new Map<string, THREE.Vector3>();
+    let moonFound = false;
     for (const body of planetsAndMoons) {
-      if (body.type === 'planet') {
-        map.set(body.name, getSolarSystemPosition(body, earthPos));
+      if (body.type === 'planet' || body.type === 'moon') {
+        const pPos = getSolarSystemPosition(body, earthPos);
+        map.set(body.name, pPos);
+        if (body.type === 'moon' || body.name.includes('Moon')) {
+          moonFound = true;
+          map.set('Moon', pPos);
+        }
       }
+    }
+    if (!moonFound) {
+      const defaultMoonPos = new THREE.Vector3(
+        earthPos.x + 5.2 * Math.cos(Math.PI / 4),
+        earthPos.y + 0.8 * Math.sin(Math.PI / 2),
+        earthPos.z + 5.2 * Math.sin(Math.PI / 4)
+      );
+      map.set('Moon', defaultMoonPos);
     }
     return map;
   }, [planetsAndMoons, earthPos]);
@@ -839,12 +853,46 @@ export const SolarSystem3D = forwardRef<SolarSystem3DRef, SolarSystem3DProps>(({
           );
         })}
 
-        {/* 6. SATELLITES AROUND OTHER PLANETS & INSIDE SOLAR SYSTEM */}
+        {/* 6. ORBITAL TRACKS FOR PLANETARY & LUNAR PROBES */}
+        {filters.orbits && filters.satellites && (
+          <group>
+            {missionObjects.map(({ mission }) => {
+              if (!mission.parentPlanet || !planetPositions.has(mission.parentPlanet)) return null;
+              const pPos = planetPositions.get(mission.parentPlanet)!;
+              const pts: THREE.Vector3[] = [];
+              const steps = 40;
+              const r = mission.orbitRadius;
+              const inc = mission.inclination;
+              for (let i = 0; i <= steps; i++) {
+                const theta = (i / steps) * Math.PI * 2;
+                const lx = r * Math.cos(theta);
+                const ly = r * Math.sin(inc) * Math.sin(theta);
+                const lz = r * Math.cos(inc) * Math.sin(theta);
+                pts.push(new THREE.Vector3(pPos.x + lx, pPos.y + ly, pPos.z + lz));
+              }
+              const geom = new THREE.BufferGeometry().setFromPoints(pts);
+              const mat = new THREE.LineBasicMaterial({
+                color: mission.target === 'Moon' ? 0x93c5fd : 0x06b6d4,
+                transparent: true,
+                opacity: 0.35,
+              });
+              return (
+                <primitive
+                  key={`probe-orbit-${mission.id}`}
+                  object={new THREE.Line(geom, mat)}
+                />
+              );
+            })}
+          </group>
+        )}
+
+        {/* 7. SATELLITES AROUND OTHER PLANETS, MOON & INSIDE SOLAR SYSTEM */}
         {filters.satellites && (
           <group>
             {missionObjects.map(({ mission, pos, skyObj }) => {
               const isSelected = selectedObject?.id === skyObj.id;
               const isFlagship =
+                mission.target === 'Moon' ||
                 mission.name.includes('Parker') ||
                 mission.name.includes('JWST') ||
                 mission.name.includes('MRO') ||
@@ -876,7 +924,10 @@ export const SolarSystem3D = forwardRef<SolarSystem3DRef, SolarSystem3DProps>(({
                   {isSelected && (
                     <mesh>
                       <ringGeometry args={[1.4, 1.8, 24]} />
-                      <meshBasicMaterial color="#38bdf8" side={THREE.DoubleSide} />
+                      <meshBasicMaterial
+                        color={mission.target === 'Moon' ? '#93c5fd' : '#38bdf8'}
+                        side={THREE.DoubleSide}
+                      />
                     </mesh>
                   )}
 
@@ -886,11 +937,15 @@ export const SolarSystem3D = forwardRef<SolarSystem3DRef, SolarSystem3DProps>(({
                       <div
                         className={`px-1.5 py-0.2 rounded font-mono text-[8px] whitespace-nowrap cursor-pointer transition-all ${
                           isSelected
-                            ? 'bg-cyan-500 text-space-950 font-bold shadow-md shadow-cyan-500/50'
+                            ? mission.target === 'Moon'
+                              ? 'bg-blue-400 text-space-950 font-bold shadow-md shadow-blue-400/50'
+                              : 'bg-cyan-500 text-space-950 font-bold shadow-md shadow-cyan-500/50'
+                            : mission.target === 'Moon'
+                            ? 'bg-space-950/90 text-blue-200 border border-blue-600/70 hover:border-blue-300'
                             : 'bg-space-950/90 text-cyan-300 border border-cyan-800/80 hover:border-cyan-400'
                         }`}
                       >
-                        {mission.name.split(' (')[0]}
+                        {mission.target === 'Moon' ? '🌕 ' : ''}{mission.name.split(' (')[0]}
                       </div>
                     </Html>
                   </Billboard>

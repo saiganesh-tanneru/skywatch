@@ -197,6 +197,11 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({ onZoomToObject }) =>
                   🇮🇳 ISRO
                 </span>
               )}
+              {Boolean(selectedObject.description && selectedObject.description.includes('Target: Moon')) && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40 font-semibold">
+                  🌕 Lunar Orbiter
+                </span>
+              )}
             </div>
           </div>
         </div>

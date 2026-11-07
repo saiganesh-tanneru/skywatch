@@ -6,8 +6,8 @@ export interface SolarSystemMission {
   id: string;
   name: string;
   agency: string;
-  target: 'Sun' | 'Mercury' | 'Venus' | 'Mars' | 'Jupiter' | 'Saturn' | 'Deep Space' | 'Asteroid Belt';
-  parentPlanet?: 'Mercury' | 'Venus' | 'Mars' | 'Jupiter' | 'Saturn';
+  target: 'Sun' | 'Mercury' | 'Venus' | 'Earth' | 'Moon' | 'Mars' | 'Jupiter' | 'Saturn' | 'Deep Space' | 'Asteroid Belt';
+  parentPlanet?: 'Mercury' | 'Venus' | 'Earth' | 'Moon' | 'Mars' | 'Jupiter' | 'Saturn';
   orbitRadius: number; // visual offset units around parent planet (or AU for heliocentric)
   isHeliocentric: boolean;
   semiMajorAxisAU?: number;
@@ -83,6 +83,113 @@ export const SOLAR_MISSIONS: SolarSystemMission[] = [
     velocityKmS: 34.2,
     distanceKm: 43000000,
     description: 'ESA orbiter that performed long-term atmospheric dynamics profiling and discovered colossal spinning polar double-vortices.',
+  },
+
+  // --- 3. LUNAR SATELLITES & MOON PROBES ---
+  {
+    id: 'mission-lro',
+    name: 'Lunar Reconnaissance Orbiter (LRO)',
+    agency: 'NASA',
+    target: 'Moon',
+    parentPlanet: 'Moon',
+    orbitRadius: 1.5,
+    isHeliocentric: false,
+    initialAngle: 0.6,
+    inclination: 0.85, // Polar lunar orbit
+    launchYear: 2009,
+    velocityKmS: 1.6,
+    distanceKm: 384400,
+    description: 'NASA\'s flagship active lunar orbiter mapping lunar surface topography with laser altimetry (LOLA) and high-resolution cameras (LROC) imaging polar water ice and landing sites.',
+  },
+  {
+    id: 'mission-chandrayaan2',
+    name: 'Chandrayaan-2 Orbiter',
+    agency: 'ISRO',
+    target: 'Moon',
+    parentPlanet: 'Moon',
+    orbitRadius: 1.9,
+    isHeliocentric: false,
+    initialAngle: 2.2,
+    inclination: 0.9, // Polar lunar orbit
+    launchYear: 2019,
+    velocityKmS: 1.6,
+    distanceKm: 384400,
+    description: 'ISRO\'s premier lunar orbiter carrying the highest-resolution camera in lunar orbit (OHRC at 25 cm/pixel) and Dual Frequency Synthetic Aperture Radar (DFSAR) mapping lunar water ice.',
+  },
+  {
+    id: 'mission-chandrayaan3-pm',
+    name: 'Chandrayaan-3 Propulsion Module',
+    agency: 'ISRO',
+    target: 'Moon',
+    parentPlanet: 'Moon',
+    orbitRadius: 2.3,
+    isHeliocentric: false,
+    initialAngle: 3.9,
+    inclination: 0.35,
+    launchYear: 2023,
+    velocityKmS: 1.55,
+    distanceKm: 384400,
+    description: 'Delivered the Vikram lander and Pragyan rover to the lunar south pole, and actively conducts exoplanet-analogue spectro-polarimetry of Earth via the SHAPE payload from lunar orbit.',
+  },
+  {
+    id: 'mission-danuri',
+    name: 'Danuri (KPLO)',
+    agency: 'KARI / NASA',
+    target: 'Moon',
+    parentPlanet: 'Moon',
+    orbitRadius: 2.7,
+    isHeliocentric: false,
+    initialAngle: 5.1,
+    inclination: 0.75,
+    launchYear: 2022,
+    velocityKmS: 1.6,
+    distanceKm: 384400,
+    description: 'South Korea\'s first lunar orbiter equipped with NASA\'s ultra-sensitive ShadowCam, imaging inside permanently shadowed polar craters 200 times more sensitively than LRO.',
+  },
+  {
+    id: 'mission-capstone',
+    name: 'CAPSTONE',
+    agency: 'NASA',
+    target: 'Moon',
+    parentPlanet: 'Moon',
+    orbitRadius: 3.2,
+    isHeliocentric: false,
+    initialAngle: 1.4,
+    inclination: 1.15, // Near-Rectilinear Halo Orbit (NRHO)
+    launchYear: 2022,
+    velocityKmS: 1.4,
+    distanceKm: 384400,
+    description: 'Pioneering lunar cubesat that verified and validated the unique Near-Rectilinear Halo Orbit (NRHO) designated for NASA\'s Artemis Gateway lunar space station.',
+  },
+  {
+    id: 'mission-queqiao2',
+    name: 'Queqiao-2 (Magpie Bridge 2)',
+    agency: 'CNSA',
+    target: 'Moon',
+    parentPlanet: 'Moon',
+    orbitRadius: 3.7,
+    isHeliocentric: false,
+    initialAngle: 3.2,
+    inclination: 0.95, // Highly elliptical frozen lunar orbit
+    launchYear: 2024,
+    velocityKmS: 1.3,
+    distanceKm: 384400,
+    description: 'Lunar far-side relay satellite equipped with a 4.2-meter parabolic mesh antenna supporting the historic Chang\'e-6 far-side sample return mission.',
+  },
+  {
+    id: 'mission-apollo11',
+    name: 'Apollo 11 CSM (Columbia)',
+    agency: 'NASA',
+    target: 'Moon',
+    parentPlanet: 'Moon',
+    orbitRadius: 1.25,
+    isHeliocentric: false,
+    initialAngle: 0.2,
+    inclination: 0.1, // Equatorial circular lunar orbit
+    launchYear: 1969,
+    velocityKmS: 1.63,
+    distanceKm: 384400,
+    description: 'The historic mother ship piloted by Michael Collins while Neil Armstrong and Buzz Aldrin conducted humanity\'s first crewed lunar landing in the Sea of Tranquility.',
   },
 
   // --- 3. MARS FLEET ---
@@ -286,21 +393,6 @@ export const SOLAR_MISSIONS: SolarSystemMission[] = [
     velocityKmS: 30.2,
     distanceKm: 1500000,
     description: 'India\'s first dedicated solar observatory stationed at Sun-Earth Lagrange Point 1 (L1) studying chromospheric and coronal heating, solar flares, and coronal mass ejections.',
-  },
-  {
-    id: 'mission-chandrayaan2',
-    name: 'Chandrayaan-2 Orbiter',
-    agency: 'ISRO',
-    target: 'Deep Space',
-    orbitRadius: 0,
-    isHeliocentric: true,
-    semiMajorAxisAU: 1.0,
-    initialAngle: 0.08,
-    inclination: 0.02,
-    launchYear: 2019,
-    velocityKmS: 29.8,
-    distanceKm: 384400,
-    description: 'Advanced lunar orbiter carrying the highest-resolution camera in lunar orbit (OHRC at 25 cm) and Dual Frequency Synthetic Aperture Radar (DFSAR) mapping lunar water ice.',
   },
   {
     id: 'mission-jwst',

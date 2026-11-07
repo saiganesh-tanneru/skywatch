@@ -99,8 +99,8 @@ export const GoogleEarthLayers: React.FC<GoogleEarthLayersProps> = ({
     },
     {
       key: 'probes',
-      label: 'Interplanetary Probes',
-      desc: 'Parker Solar Probe, JWST, Mars Orbiters, Juno, BepiColombo, Cassini',
+      label: 'Lunar Probes & Interplanetary Fleet',
+      desc: 'Moon orbiters (LRO, Chandrayaan-2/3, Danuri, CAPSTONE, Apollo 11), Parker, JWST, Mars fleet',
       icon: Radio,
       color: '#06b6d4',
     },
